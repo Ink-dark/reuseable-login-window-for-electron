@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>聊天软件登录</title>
+  <!-- 导入组件样式 -->
+  <link rel="stylesheet" href="./components/styles.css">
+</head>
+<body>
+  <div class="app-container login-container" id="loginContainer">
+    <!-- 组件将通过JavaScript动态创建 -->
+    
+    <!-- 登录表单内容区域 -->
+    <div id="loginContent" class="fade-in">
+      <!-- 头像将在这里动态创建 -->
+      <div id="avatarContainer"></div>
+      
+      <!-- 输入框将在这里动态创建 -->
+      <div id="inputsContainer"></div>
+      
+      <!-- 按钮将在这里动态创建 -->
+      <div id="buttonsContainer"></div>
+      
+      <!-- 页脚信息 -->
+      <div class="footer text-center mt-4">
+        <a href="#" id="registerLink">注册账号</a> | 
+        <a href="#" id="forgotPasswordLink">忘记密码</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // 导入所有组件
+    import { 
+      createWindowControls, 
+      createInputField, 
+      createButton,
+      createAvatar 
+    } from './components/index.js';
+    
+    // 等待DOM加载完成
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginContainer = document.getElementById('loginContainer');
+      const avatarContainer = document.getElementById('avatarContainer');
+      const inputsContainer = document.getElementById('inputsContainer');
+      const buttonsContainer = document.getElementById('buttonsContainer');
+      
+      // 创建窗口控制按钮（最小化和关闭）
+      const windowControls = createWindowControls({
+        containerClass: 'window-controls',
+        showMinimize: true,
+        showClose: true
+      });
+      loginContainer.appendChild(windowControls);
+      
+      // 创建头像组件
+      const avatar = createAvatar({
+        text: 'T',
+        size: 100,
+        containerClass: 'avatar-container'
+      });
+      avatarContainer.appendChild(avatar);
+      
+      // 创建用户名输入框
+      let usernameValue = '';
+      const usernameInput = createInputField({
+        id: 'username',
+        type: 'text',
+        placeholder: '账号',
+        onChange: (value) => {
+          usernameValue = value;
+        },
+        required: true
+      });
+      inputsContainer.appendChild(usernameInput);
+      
+      // 创建密码输入框
+      let passwordValue = '';
+      const passwordInput = createInputField({
+        id: 'password',
+        type: 'password',
+        placeholder: '密码',
+        onChange: (value) => {
+          passwordValue = value;
+        },
+        required: true
+      });
+      inputsContainer.appendChild(passwordInput);
+      
+      // 创建登录按钮
+      const loginButton = createButton({
+        id: 'loginButton',
+        text: '登录',
+        type: 'primary',
+        onClick: () => {
+          // 验证输入
+          if (usernameValue && passwordValue) {
+            alert('登录成功！');
+            // 这里可以添加实际的登录逻辑
+          } else {
+            alert('请输入账号和密码');
+          }
+        }
+      });
+      buttonsContainer.appendChild(loginButton);
+    });
+  </script>
+</body>
+</html>
